@@ -8,4 +8,7 @@ if [[ $KM_USERNAME != ''  && $KM_PASSWORD != '' ]]; then
     echo 'basicAuthentication.realm="Kafka-Manager"' >> /kafka-manager-${KM_VERSION}/conf/application.conf
 fi
 
-exec ./bin/kafka-manager -Dconfig.file=${KM_CONFIGFILE} "${KM_ARGS}" "${@}"
+rm -f /kafka-manager-${KM_VERSION}/RUNNING_PID
+mkdir -p /var/log/kafka-manager
+
+exec ./bin/kafka-manager -Dconfig.file=${KM_CONFIGFILE} "${KM_ARGS}" "${@}" >>/var/log/kafa-manager/run.log 2>&1
